@@ -30,7 +30,6 @@ printf "\n2-st \"sed\" results:\n"
 SED_COMMAND='s/.\(.\)$/\1/'
 cat my_table | sed $SED_COMMAND
 
-####TO COMPLETE####
-#printf "\n3-st \"sed\" results:\n"
-#SED_COMMAND='s/\<[^\s\t]\>'
-#cat my_table | sed $SED_COMMAND
+printf "\n3-st \"sed\" results:\n"
+SED_COMMAND='s/\(\<[0-9a-zA-Z_]*\)\([^0-9a-zA-Z_]*\)\(\<[0-9a-zA-Z_]*\)/\3\2\1/'
+cat my_table | sed $SED_COMMAND
