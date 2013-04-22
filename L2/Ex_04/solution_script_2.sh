@@ -1,4 +1,4 @@
-#!/bin/bash
+exu#!/bin/bash
 
 printf "\nEnter word for search: "
 read WORD
