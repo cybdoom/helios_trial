@@ -23,7 +23,7 @@ list_t* list_insert_rear(list_t *list, void *element);
 list_t* list_remove_front(list_t *list);
 
 /* Remove the specified element of the list. Returns the pointer to the new head */
-list_t* list_remove_any(list_t *list, void *element);
+list_t* list_remove_any(list_t *list, void *element, int remove_all_instances);
 
 /* Remove the end element of the list. Returns the pointer to the new head */
 list_t* list_remove_rear(list_t *list);
@@ -36,6 +36,9 @@ int search(list_t *list, void *element);
 
 /* Free memory was allocated for the list */
 void list_free(list_t *list);
+
+/* Returns if the list is empty */
+int list_is_empty(list_t *list);
 
 /* Prints the list */
 void list_print_as_ints(list_t *list);

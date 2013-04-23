@@ -154,6 +154,7 @@ list_t* list_remove_front(list_t *list)
 	assert(list->data);
 
 	free(list->data);
+	list->data = NULL;
 
 	if (!list->next)
 	{
@@ -186,10 +187,64 @@ list_t* list_remove_rear(list_t *list)
 		}
 
 		free(cur_node->next->data);
-		free(cur_node->next);
+		cur_node->next->data = NULL;
 
+		free(cur_node->next);
 		cur_node->next = NULL;
 	}
+}
+
+list_t* list_remove_any(list_t *list, void *element, int remove_all_instances)
+{
+	list_t *cur_node = list;
+
+	assert(list);
+	assert(element);
+
+	if (list_is_empty(list))
+	{
+		return list;
+	}
+
+	if (*((int *)(list->data)) == *((int *)element))
+	{
+		if (!remove_all_instances)
+		{
+			return list_remove_front(list);
+		}
+		else
+		{
+			return list_remove_any(list_remove_front(list), element, 1);
+		}
+	}
+	else
+	{
+		while (cur_node->next)
+		{
+			if (cur_node->next->data && *((int *)(cur_node->next->data)) == *((int *)element))
+			{
+				
+				list_t *node_to_rm = cur_node->next;
+				free(cur_node->next->data);
+				cur_node->next = cur_node->next->next;
+				free(node_to_rm);
+			}
+			else
+			{
+				cur_node = cur_node->next;
+			}
+
+			if (!remove_all_instances) break;
+		}
+
+		return list;
+	}
+}
+
+int list_is_empty(list_t *list)
+{
+	assert(list);
+	return list->data == NULL;
 }
 
 void list_print_as_ints(list_t *list)
@@ -212,5 +267,3 @@ void list_print_as_ints(list_t *list)
 		printf("<empty>");
 	}
 }
-
-
