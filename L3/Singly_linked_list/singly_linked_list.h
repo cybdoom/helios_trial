@@ -25,6 +25,9 @@ list_t* list_remove_front(list_t *list);
 /* Remove the specified element of the list. Returns the pointer to the new head */
 list_t* list_remove_any(list_t *list, void *element, int remove_all_instances);
 
+/* Remove the element on specified position. Returns the pointer to the new head */
+list_t* list_remove_pos(list_t *list, int pos);
+
 /* Remove the end element of the list. Returns the pointer to the new head */
 list_t* list_remove_rear(list_t *list);
 
@@ -32,7 +35,7 @@ list_t* list_remove_rear(list_t *list);
 size_t list_size(list_t *list);
 
 /* Search for position of specified element in target list */
-int search(list_t *list, void *element);
+int list_search(list_t *list, void *element);
 
 /* Free memory was allocated for the list */
 void list_free(list_t *list);

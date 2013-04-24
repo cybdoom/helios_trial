@@ -6,51 +6,62 @@
 
 int main(void)
 {
+	int *x;
+	
 	list_t *my_list = list_init();
 	assert(list_size(my_list) == 0);
-	int *x = malloc(sizeof(int));
+	printf("After initialization: ");
+	list_print_as_ints(my_list);
+	
+	x = malloc(sizeof(int));
 	*x = 1;
 
 	my_list = list_insert_front(my_list, x);
 	assert(list_size(my_list) == 1);
+	printf("\nAdded front element: ");
 	list_print_as_ints(my_list);
-	printf("\n");
-
-	x = malloc(sizeof(int));
-	*x = 2;
-
-	my_list = list_insert_after(my_list, x, 1);
-	assert(list_size(my_list) == 2);
-	list_print_as_ints(my_list);
-	printf("\n");
 
 	x = malloc(sizeof(int));
 	*x = 3;
 
 	my_list = list_insert_rear(my_list, x);
-	assert(list_size(my_list) == 3);
+	assert(list_size(my_list) == 2);
+	printf("\nAdded rear element: ");
 	list_print_as_ints(my_list);
-	printf("\n");
 
 	x = malloc(sizeof(int));
-	*x = 3;
+	*x = 2;
 
 	my_list = list_insert_after(my_list, x, 1);
-	assert(list_size(my_list) == 4);
+	assert(list_size(my_list) == 3);
+	printf("\nAdded middle element: ");
 	list_print_as_ints(my_list);
-	printf("\n");
 
-	{
-		int *etalon = malloc(sizeof(int));
-		*etalon = 3;
-		my_list = list_remove_any(my_list, etalon, 1);
-		free(etalon);
-		list_print_as_ints(my_list);
-		printf("\n");
-	}
+	printf("\nCurrent list length is: %d", list_size(my_list));
+	printf("\nSearching for element with value \"2\"... The element position is: %d", list_search(my_list, x));
+
+	my_list = list_remove_front(my_list);
+	assert(list_size(my_list) == 2);
+	printf("\nRemoved front element: ");
+	list_print_as_ints(my_list);
+
+	my_list = list_remove_rear(my_list);
+	assert(list_size(my_list) == 1);
+	printf("\nRemoved rear element: ");
+	list_print_as_ints(my_list);
+
+	my_list = list_remove_pos(my_list, 1);
+	assert(list_size(my_list) == 0 && list_is_empty(my_list));
+	printf("\nRemoved middle element: ");
+	list_print_as_ints(my_list);
+
+	my_list = list_remove_front(my_list);
+	assert(list_size(my_list) == 0 && list_is_empty(my_list));
+	printf("\nAttempt to remove node from empty list. The result is: ");
+	list_print_as_ints(my_list);
+	printf("\n");	
 
 	list_free(my_list);
-	assert(my_list);
 
 	return 0;
 }

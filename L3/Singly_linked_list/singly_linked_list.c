@@ -151,7 +151,11 @@ list_t* list_insert_rear(list_t *list, void *element)
 list_t* list_remove_front(list_t *list)
 {
 	assert(list);
-	assert(list->data);
+
+	if (list_is_empty(list))
+	{
+		return list;
+	}
 
 	free(list->data);
 	list->data = NULL;
@@ -171,7 +175,11 @@ list_t* list_remove_front(list_t *list)
 list_t* list_remove_rear(list_t *list)
 {
 	assert(list);
-	assert(list->data);
+
+	if (list_is_empty(list))
+	{
+		return list;
+	}
 
 	if (!list->next)
 	{
@@ -235,6 +243,68 @@ list_t* list_remove_any(list_t *list, void *element, int remove_all_instances)
 			}
 
 			if (!remove_all_instances) break;
+		}
+
+		return list;
+	}
+}
+
+int list_search(list_t *list, void *element)
+{
+	assert(list);
+	assert(element);
+
+	if (list_is_empty(list))
+	{
+		return -1;
+	}
+
+	{
+		int pos = 1;
+		
+		while (list)
+		{
+			if (list->data && *((int *)(list->data)) == *((int *)element))
+				return pos;
+
+			pos++;
+			list = list->next;
+		}
+
+		return -1;
+	}
+}
+
+list_t* list_remove_pos(list_t *list, int pos)
+{
+	assert(list);
+	assert(pos > 0 && pos <= list_size(list));
+
+	if (list_is_empty(list))
+	{
+		return list;
+	}
+
+	if (pos == 1)
+	{
+		return list_remove_front(list);
+	}
+	else
+	{
+		int cur_pos = 1;
+
+		while (list->next && cur_pos < pos - 1)
+		{
+			cur_pos++;
+			list = list->next;
+		}
+
+		if (list->next)
+		{
+			list_t *node_to_rm = list->next;
+			free(list->next->data);
+			list->next = list->next->next;
+			free(node_to_rm);
 		}
 
 		return list;
