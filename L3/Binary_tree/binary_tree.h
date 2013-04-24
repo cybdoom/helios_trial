@@ -19,7 +19,10 @@ void btree_dispose(binary_tree_t *root);
 /* Insert the given element into the tree following the binary search tree's concept */
 void btree_insert(binary_tree_t *root, void *element);
 
+/* Remove the given element from the tree following the binary search tree's concept */
+void btree_remove(binary_tree_t *root, void *element);
+
 /* Backtracked output of the tree */
-void btree_backtrack_print(binary_tree_t *btree);
+void btree_backtrack_print(binary_tree_t *root);
 
 

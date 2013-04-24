@@ -94,7 +94,7 @@ void btree_insert(binary_tree_t *root, void *element)
 
 		while (1)
 		{
-			if (btree_comparator(cur_node->data, element) == -1)
+			if (btree_comparator(element, cur_node->data) == -1)
 			{
 				if (cur_node->left_child)
 				{
@@ -128,4 +128,153 @@ void btree_insert(binary_tree_t *root, void *element)
 			}
 		}
 	}
+}
+
+void btree_remove(binary_tree_t *root, void *element)
+{
+	binary_tree_t *cur_node = root;
+	assert(root);
+
+	if (!root->data)
+	{
+		return;
+	}
+
+	while (1)
+	{
+		if (!(cur_node && cur_node->data))
+			return;
+
+		if (btree_comparator(element, cur_node->data) == -1)
+		{
+			cur_node = cur_node->left_child;
+			continue;
+		}
+
+		if (btree_comparator(element, cur_node->data) == 1)
+		{
+			cur_node = cur_node->right_child;
+			continue;
+		}
+
+		{
+			if (!(cur_node->left_child || cur_node->right_child))
+			{
+				if (cur_node->data)
+				{
+					free(cur_node->data);
+				}
+
+				if (cur_node->parent)
+				{
+					if (cur_node == cur_node->parent->left_child)
+					{
+						cur_node->parent->left_child = NULL;
+					}
+					else if (cur_node == cur_node->parent->right_child)
+						{
+							cur_node->parent->right_child = NULL;
+						}
+
+					free(cur_node);
+				}
+
+				return;
+			}
+
+			if (cur_node->left_child && !cur_node->right_child)
+			{
+				if (cur_node->data)
+				{
+					free(cur_node->data);
+				}
+
+				if (cur_node->parent)
+				{
+					if (cur_node == cur_node->parent->left_child)
+					{
+						cur_node->parent->left_child = cur_node->left_child;
+					}
+					else if (cur_node == cur_node->parent->right_child)
+						{
+							cur_node->parent->right_child = cur_node->left_child;
+						}
+
+					free(cur_node);
+				}
+
+				return;
+			}
+
+			if (!cur_node->left_child && cur_node->right_child)
+			{
+				if (cur_node->data)
+				{
+					free(cur_node->data);
+				}
+
+				if (cur_node->parent)
+				{
+					if (cur_node == cur_node->parent->left_child)
+					{
+						cur_node->parent->left_child = cur_node->right_child;
+					}
+					else if (cur_node == cur_node->parent->right_child)
+						{
+							cur_node->parent->right_child = cur_node->right_child;
+						}
+
+					free(cur_node);
+				}
+
+				return;
+			}
+
+			if (cur_node->left_child && cur_node->right_child)
+			{
+				binary_tree_t *node_to_swap = cur_node->right_child;
+
+				while (node_to_swap->left_child)
+				{
+					node_to_swap = node_to_swap->left_child;
+				}
+
+				//printf("\nNode to swap: %d", *((int *)(node_to_swap->data)));
+
+				if (node_to_swap == node_to_swap->parent->left_child)
+				{
+					node_to_swap->parent->left_child = NULL;
+				}
+				else if (node_to_swap == node_to_swap->parent->right_child)
+					{
+						node_to_swap->parent->right_child = NULL;
+					}
+
+				if (cur_node->data)
+				{
+					free(cur_node->data);
+				}
+				cur_node->data = node_to_swap->data;
+
+				free(node_to_swap);
+
+				return;
+			}
+		}
+	}
+}
+
+void btree_backtrack_print(binary_tree_t *cur_node)
+{
+	if (cur_node->left_child)
+	{
+		btree_backtrack_print(cur_node->left_child);
+	}
+
+	if (cur_node->right_child)
+	{
+		btree_backtrack_print(cur_node->right_child);
+	}
+
+	printf(" => %d", *((int *)(cur_node->data)));
 }
