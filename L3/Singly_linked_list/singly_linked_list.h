@@ -1,6 +1,6 @@
 #include <stddef.h>
 
-/* Structure to represent singly linked list's node */
+/* The structure to represent singly linked list's node */
 typedef struct list_t_
 {
 	void *data;
