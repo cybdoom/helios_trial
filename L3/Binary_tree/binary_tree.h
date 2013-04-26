@@ -25,4 +25,7 @@ void btree_remove(binary_tree_t *root, void *element);
 /* Backtracked output of the tree */
 void btree_backtrack_print(binary_tree_t *root);
 
+/* Search for the specified element. Returns tree node or NULL */
+binary_tree_t* btree_search(binary_tree_t *root, void *element);
+
 

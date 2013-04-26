@@ -278,3 +278,24 @@ void btree_backtrack_print(binary_tree_t *cur_node)
 
 	printf(" => %d", *((int *)(cur_node->data)));
 }
+
+binary_tree_t* btree_search(binary_tree_t *root, void *element)
+{
+	while (root && root->data)
+	{
+		if (btree_comparator(element, root->data) == -1)
+		{
+			root = root->left_child;
+		}
+		else if (btree_comparator(element, root->data) == 1)
+		{
+			root = root->right_child;
+		}
+		else
+		{
+			return root;
+		}
+	}
+
+	return NULL;
+}
