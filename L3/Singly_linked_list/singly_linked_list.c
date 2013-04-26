@@ -214,7 +214,7 @@ list_t* list_remove_any(list_t *list, void *element, int remove_all_instances)
 		return list;
 	}
 
-	if (*((int *)(list->data)) == *((int *)element))
+	if (!list_comparator(element, list->data))
 	{
 		if (!remove_all_instances)
 		{
@@ -229,7 +229,7 @@ list_t* list_remove_any(list_t *list, void *element, int remove_all_instances)
 	{
 		while (cur_node->next)
 		{
-			if (cur_node->next->data && *((int *)(cur_node->next->data)) == *((int *)element))
+			if (cur_node->next->data && !list_comparator(element, cur_node->next->data))
 			{
 				
 				list_t *node_to_rm = cur_node->next;
@@ -249,14 +249,14 @@ list_t* list_remove_any(list_t *list, void *element, int remove_all_instances)
 	}
 }
 
-int list_search(list_t *list, void *element)
+list_t* list_search(list_t *list, void *element)
 {
 	assert(list);
 	assert(element);
 
 	if (list_is_empty(list))
 	{
-		return -1;
+		return NULL;
 	}
 
 	{
@@ -264,14 +264,14 @@ int list_search(list_t *list, void *element)
 		
 		while (list)
 		{
-			if (list->data && *((int *)(list->data)) == *((int *)element))
-				return pos;
+			if (!list_comparator(element, list->data))
+				return list;
 
 			pos++;
 			list = list->next;
 		}
 
-		return -1;
+		return NULL;
 	}
 }
 
@@ -317,7 +317,7 @@ int list_is_empty(list_t *list)
 	return list->data == NULL;
 }
 
-void list_print_as_ints(list_t *list)
+void list_print(list_t *list)
 {
 	assert(list);
 
@@ -336,4 +336,23 @@ void list_print_as_ints(list_t *list)
 	{
 		printf("<empty>");
 	}
+}
+
+int list_comparator(void *left_op, void *right_op)
+{
+	assert(left_op);
+	assert(right_op);
+
+	if (*((int *)left_op) < *((int *)right_op))
+	{
+		return -1;
+	}
+	else if (*((int *)left_op) > *((int *)right_op))
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
 }

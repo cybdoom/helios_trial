@@ -1,5 +1,3 @@
-# Makefile for Singly_linked_list project
-
 test_1.exe: test_1.o libsingly_linked_list.a
 	gcc -o test_1.exe test_1.o -L. -lsingly_linked_list
 

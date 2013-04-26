@@ -35,7 +35,10 @@ list_t* list_remove_rear(list_t *list);
 size_t list_size(list_t *list);
 
 /* Search for position of specified element in target list */
-int list_search(list_t *list, void *element);
+list_t* list_search(list_t *list, void *element);
+
+/* Compare two node values */
+int list_comparator(void *left_op, void *right_op);
 
 /* Free memory was allocated for the list */
 void list_free(list_t *list);
@@ -44,4 +47,4 @@ void list_free(list_t *list);
 int list_is_empty(list_t *list);
 
 /* Prints the list */
-void list_print_as_ints(list_t *list);
+void list_print(list_t *list);
