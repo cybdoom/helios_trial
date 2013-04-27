@@ -25,7 +25,7 @@ void htable_insert(hash_table_t *table, void *element)
 {
 	int hash_value = hash_func(table, element);
 
-	list_insert_rear(*((list_t **)(table->rows + hash_value)), element);
+	list_insert_front(*((list_t **)(table->rows + hash_value)), element);
 }
 
 void htable_remove(hash_table_t *table, void *element)
