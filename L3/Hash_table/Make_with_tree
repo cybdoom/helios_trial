@@ -1,16 +1,8 @@
-PATH_TO_SOURCES=../Binary_tree/
+libhash_table.a: hash_table.o
+	ar cr libhash_table.a hash_table.o
 
-test_1.exe: test_1.o libhash_table_tree.a
-	gcc -o test_1.exe test_1.o -L. -lhash_table_tree
-
-test_1.o: test_1.c
-	gcc -c test_1.c
-
-libhash_table_tree.a: hash_table_tree.o $(PATH_TO_SOURCES)binary_tree.o
-	ar cr libhash_table_tree.a hash_table_tree.o $(PATH_TO_SOURCES)binary_tree.o
-
-hash_table_tree.o: hash_table_tree.c
-	gcc -c hash_table_tree.c
+hash_table.o: hash_table_tree.c
+	gcc -c -o hash_table.o hash_table_tree.c
 
 clean:
-	rm -f *.o *.a test_1.exe
+	rm -f libhash_table.a hash_table.o

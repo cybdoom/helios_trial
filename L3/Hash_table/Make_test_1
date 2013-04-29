@@ -1,0 +1,8 @@
+test_1.exe: test_1.o
+	gcc -o test_1.exe test_1.o -L. -lhash_table -L../Singly_linked_list -lsingly_linked_list
+
+test_1.o: test_1.c
+	gcc -c test_1.c
+
+clean:
+	rm -f test_1.o test_1.exe

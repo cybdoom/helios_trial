@@ -1,16 +1,8 @@
-PATH_TO_SOURCES=../Singly_linked_list/
+libhash_table.a: hash_table.o
+	ar cr libhash_table.a hash_table.o
 
-test_1.exe: test_1.o libhash_table_list.a
-	gcc -o test_1.exe test_1.o -L. -lhash_table_list
-
-test_1.o: test_1.c
-	gcc -c test_1.c
-
-libhash_table_list.a: hash_table_list.o $(PATH_TO_SOURCES)singly_linked_list.o
-	ar cr libhash_table_list.a hash_table_list.o $(PATH_TO_SOURCES)singly_linked_list.o
-
-hash_table_list.o: hash_table_list.c
-	gcc -c hash_table_list.c
+hash_table.o: hash_table_list.c
+	gcc -c -o hash_table.o hash_table_list.c
 
 clean:
-	rm -f *.o *.a test_1.exe
+	rm -f libhash_table.a hash_table.o
